@@ -1,0 +1,72 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<MVCAuthentication.ViewModels.SaleVM>
+
+@{ ViewBag.Title = "Index"; }
+
+<h2>A List Of All Sales</h2>
+
+<p>
+    @Html.ActionLink("Create A New Sale", "Create")
+</p>
+@using (Html.BeginForm())
+{
+<p>
+    Search Sale By Client's First Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+    <input type="submit" value="Search" />
+</p>}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().MotorcycleModel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ClientFirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ClientLastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().SellerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().SaleDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().SalePrice)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.MotorcycleModel)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ClientFirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ClientLastName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SellerName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SaleDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SalePrice)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+    </td>
+</tr>}
+
+</table>
+<div id="pager">
+    <p> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div> 

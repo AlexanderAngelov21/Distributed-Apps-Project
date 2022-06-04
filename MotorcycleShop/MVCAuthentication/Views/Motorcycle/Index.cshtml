@@ -1,0 +1,94 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<MVCAuthentication.ViewModels.MotorcycleVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Motorcycles Information</h2>
+
+<p>
+    @Html.ActionLink("Create New Motorcycle", "Create")
+</p>
+@using (Html.BeginForm())
+{
+    <p>
+        Search Motorcycle By Color: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Search" />
+    </p>}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().BrandId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Condition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Power)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ManifactureDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Details)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().AddedBy)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrandVM.BrandName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Condition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Power)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManifactureDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddedBy)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+<div id="pager">
+    <p> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div> 
